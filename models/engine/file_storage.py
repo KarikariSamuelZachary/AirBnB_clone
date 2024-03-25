@@ -5,7 +5,9 @@ This module contains a class that stores instances of other classes
 in a json file
 """
 import json
+from models.user import User
 from models.base_model import BaseModel
+
 
 class FileStorage:
     """This class stores instances of other classes
@@ -34,8 +36,7 @@ class FileStorage:
     def reload(self):
         """Deserializes json objs from json file"""
         try:
-            with open(FileStorage.__file_path, mode='r', encoding='utf-8')\
-                    as f:
+            with open(FileStorage.__file_path, mode='r') as f:
                 loaded_objs = json.load(f)
 
             for key, obj in loaded_objs.items():
