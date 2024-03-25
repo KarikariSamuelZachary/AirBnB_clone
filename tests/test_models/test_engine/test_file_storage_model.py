@@ -7,6 +7,7 @@ import os
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
+
 class TestFileStorage(unittest.TestCase):
     def setUp(self):
         """Create a FileStorage instance"""
@@ -37,6 +38,7 @@ class TestFileStorage(unittest.TestCase):
         self.storage.reload()
         self.assertIn(f"{type(obj1).__name__}.{obj1.id}", self.storage.all())
         self.assertIn(f"{type(obj2).__name__}.{obj2.id}", self.storage.all())
+
 
 if __name__ == '__main__':
     unittest.main()
