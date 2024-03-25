@@ -28,9 +28,11 @@ class BaseModel():
                 setattr(self, key, value)
 
         else:
+            from models import storage
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self) -> str:
         """Returns the string repr of the base model class"""
@@ -38,7 +40,9 @@ class BaseModel():
 
     def save(self) -> None:
         """updates updated_at with the current time"""
+        from models import storage
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self) -> dict:
         """returns __dict__ instance of the class"""

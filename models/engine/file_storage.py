@@ -5,13 +5,13 @@ This module contains a class that stores instances of other classes
 in a json file
 """
 import json
-
+from models.base_model import BaseModel
 
 class FileStorage:
     """This class stores instances of other classes
     by serializing and deserializing
     """
-    __file_path = "file.json"
+    __file_path = "data.json"
     __objects = dict()
 
     def all(self) -> dict:
