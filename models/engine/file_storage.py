@@ -11,7 +11,7 @@ class FileStorage:
     """This class stores instances of other classes
     by serializing and deserializing
     """
-    __file_path = "data.json"
+    __file_path = "file.json"
     __objects = dict()
 
     def all(self) -> dict:
