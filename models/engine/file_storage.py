@@ -1,44 +1,35 @@
-#!/usr/bin/python3
-"""
-Storage module
+#!/bin/usr/python3
+"""File_Storage model
 
-This module contains a classe that helps store other class objs
+This module contains a class that stores instances of other classes
+in a json file
 """
 import json
-from datetime import datetime
 from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
-
 
 class FileStorage:
+    """This class stores instances of other classes
+    by serializing and deserializing
     """
-    Serializes instances to a JSON file and
-    deserializes JSON file to instances
-    """
-    __file_path = 'data.json'
+    __file_path = "file.json"
     __objects = dict()
 
     def all(self) -> dict:
-        """Returns all objects in a dictionary"""
+        """Returns a dictionary __objects"""
         return FileStorage.__objects
 
-    def new(self, obj) -> None:
-        """Sets a new obj in self.__objects with key <obj class name>.id"""
-        key = f"{type(obj).__name__}.{str(obj.id)}"
-        FileStorage.__objects[key] = obj
+    def new(self, obj):
+        """sets in __objects the obj with key <obj class name>.id"""
+        key = f"{type(obj).__name__}.id"
+        FileStorage.__objects["key"] = obj
 
     def save(self):
-        """Serializes objs and saves to json file"""
-        serialized_objs = {}
-        for key, obj in FileStorage.__objects.items():
-            serialized_objs[key] = obj.to_dict()
-        with open(FileStorage.__file_path, mode='w', encoding='utf-8') as f:
-            json.dump(serialized_objs, f)
+        """serializes __objects to the JSON file (__file_path)"""
+        serialized = {}
+        for key, value in FileStorage.__objects.items():
+            serialized["key"] = value.to_dict()
+            with open(FileStorage.__file_path, mode="w") as f:
+                json.dump(serialized, f)
 
     def reload(self):
         """Deserializes json objs from json file"""
