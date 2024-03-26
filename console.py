@@ -3,9 +3,14 @@
 
 import cmd
 import json
-from models.base_model import BaseModel
-from models.user import User
+import shlex
 from models import storage
+from models.base_model import BaseModel
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -27,20 +32,23 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel or User and saves it"""
+        """Creates a new instance of a class, saves it, and prints its id"""
+        args = shlex.split(arg)
         if not arg:
             print("** class name missing **")
             return
         try:
-            new_instance = eval(arg)()
-            new_instance.save()
-            print(new_instance.id)
+            cls = eval(args[0])
         except NameError:
             print("** class doesn't exist **")
+            return
+        new_instance = cls()
+        new_instance.save()
+        print(new_instance.id)
 
     def do_show(self, arg):
         """Prints the string representation of an instance"""
-        args = arg.split()
+        args = shlex.split(arg)
         if not arg:
             print("** class name missing **")
             return
@@ -60,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
-        args = arg.split()
+        args = shlex.split(arg)
         if not arg:
             print("** class name missing **")
             return
@@ -85,13 +93,13 @@ class HBNBCommand(cmd.Cmd):
             print([str(val) for val in storage.all().values()])
         else:
             try:
-                cls = eval(arg)
+                cls = eval(args[0])
             except NameError:
                 print("** class doesn't exist **")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
-        args = arg.split()
+        args = shlex.split(arg)
         if not arg:
             print("** class name missing **")
             return
