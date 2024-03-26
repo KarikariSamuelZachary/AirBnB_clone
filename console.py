@@ -82,6 +82,10 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 cls = eval(arg)
+                if hasattr(cls, 'all'):
+                    print([str(inst) for inst in cls.all()])
+                else:
+                    print("** class doesn't support 'all()' method **")
             except NameError:
                 print("** class doesn't exist **")
 
