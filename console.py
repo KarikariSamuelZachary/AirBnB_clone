@@ -94,8 +94,12 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print([str(val) for val in storage.all().values()])
         else:
+            class_name, dot, method = args[0].partition('.')
+            if dot != '.' or method != 'all' or not class_name:
+                print("*** Unknown syntax: {}".format(arg))
+                return
             try:
-                cls = eval(args[0])
+                cls = eval(class_name)
             except NameError:
                 print("** class doesn't exist **")
                 return
@@ -127,6 +131,23 @@ class HBNBCommand(cmd.Cmd):
             return
         setattr(storage.all()[key], args[2], args[3])
         storage.save()
+
+        def do_count(self, arg):
+            """Counts the number of instances of a class"""
+            args = shlex.split(arg)
+            if len(args) != 1:
+                print("*** Unknown syntax: count {}".format(arg))
+                return
+
+            class_name = args[0]
+            try:
+                cls = eval(class_name)
+            except NameError:
+                print("** class doesn't exist **")
+                return
+
+            count = len(storage.all(cls))
+            print(count)
 
 
 if __name__ == '__main__':
